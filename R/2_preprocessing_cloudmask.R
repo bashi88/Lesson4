@@ -5,25 +5,16 @@
 
 # Function removes the cloudcover from the NDVI images and crops the images to the correct size
 
-cloudremover <- function(ndviraster,FolderLocation,Pattern) {
-  
-  cloud<- list.files(FolderLocation, pattern = Pattern, full.names = TRUE)
-  
-  cloudraster <- raster(cloud)
-  
-  cloudremoval <- function(x, y){
+CloudRemover <- function(NdviRaster, FolderLocation, Pattern) {
+  Cloud <- list.files(FolderLocation, pattern = Pattern, full.names = TRUE) 
+  CloudRaster <- raster(Cloud)
+  CloudRemoval <- function(x, y) {
     x[y != 0] <- NA
-    return(x)}
+    return(x)
+  }
   
-  cloudrastercropped <- crop(cloudraster,ProjectExtent)
-  ndvirastercropped <- crop(ndviraster,ProjectExtent)
-  
-  ndvicloudfree <- overlay(x = ndviraster, y = cloudraster, fun = cloudremoval)
-  
-  return(ndvicloudfree)
+  CloudRasterCropped <- crop(CloudRaster, ProjectExtent)
+  NdviRasterCropped <- crop(NdviRaster, ProjectExtent)
+  NdviCloudFree <- overlay(x = NdviRaster, y = CloudRaster, fun = CloudRemoval)
+  return(NdviCloudFree)
 }
-
-
-writeRaster(x = ndvi1CloudFree, filename='data/ndviCloudFree1.grd', datatype='INT2S')
-writeRaster(x = ndvi2CloudFree, filename='data/ndviCloudFree2.grd', datatype='INT2S')
-

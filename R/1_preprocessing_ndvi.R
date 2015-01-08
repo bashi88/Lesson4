@@ -3,22 +3,19 @@
 # Date: 08/01/2015       
 # Exercise 4
 
-# Function calculates NDVI for both Landsat 5 and Landsat 8 datasets
-# Arguments are:
-# - folder location,
-# - 2 x pattern 
+# Function calcndvi calculates NDVI for both Landsat 5 and Landsat 8 datasets
 
-calcndvi <- function(FolderLocation, Pattern1, Pattern2) {
+CalcNDVI <- function(FolderLocation, Pattern1, Pattern2) {
   
-  red <- list.files(FolderLocation, pattern = Pattern1, full.names = TRUE)
-  infra <- list.files(FolderLocation, pattern = Pattern2, full.names = TRUE)
+  Red <- list.files(FolderLocation, pattern = Pattern1, full.names = TRUE)
+  Infra <- list.files(FolderLocation, pattern = Pattern2, full.names = TRUE)
   
-  rasterred <- raster(red)
-  rasterinfra <- raster(infra)
+  RasterRed <- raster(Red)
+  RasterInfra <- raster(Infra)
   
-  ndvi <- (rasterinfra - rasterred) / (rasterinfra + rasterred)
+  NDVI <- (RasterInfra - RasterRed) / (RasterInfra + RasterRed)
    
-  return(ndvi)
+  return(NDVI)
 }
 
 
